@@ -31,7 +31,7 @@ global_job_config:
       # Bundler 4 removed `bundle install --deployment`. This setting installs
       # gems into vendor/bundle and keeps Gemfile.lock frozen for every job.
       - bundle config set --local deployment true
-      - cache restore                   # Pull dependencies & packs from cache
+      - cache restore                   # Pull dependencies from cache
 
 # ---------------------------------------------------------------------
 # WORKFLOW
@@ -49,18 +49,6 @@ blocks:
             - cache store                                      # Save vendor/bundle & node_modules
     dependencies: []
 
-  # ------------- FRONT-END BUILD -------------
-  - name: "🖼️ Webpacker Build"
-    task:
-      jobs:
-        - name: Compile Assets
-          commands:
-            - cache restore webpacker-assets               # Reuse previous packs if present
-            - bundle exec rake webpacker:compile           # Produce packs for tests
-            - cache store webpacker-assets public/packs    # Save packs for later blocks
-    dependencies:
-      - "🛠 Setup & Cache"
-
   # ------------- CODE QUALITY -------------
   - name: "🔍 ESLint & Stylelint"
     task:
@@ -70,7 +58,7 @@ blocks:
             - yarn run eslint .                # Lint JavaScript
             - yarn run stylelint '**/*.scss'   # Lint SCSS
     dependencies:
-      - "🖼️ Webpacker Build"
+      - "🛠 Setup & Cache"
 
   - name: "🧹 RuboCop"
     task:
@@ -114,7 +102,6 @@ blocks:
         - name: "🟢 RSpec Tests"
           parallelism: 5                       # Split across 5 nodes
           commands:
-            - cache restore webpacker-assets   # Pull precompiled packs
             - bundle exec rake db:setup        # Build fresh test DB
             # Automatic test splitting via Semaphore Boosters
             - rspec_booster --job "$SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT" --format RspecJunitFormatter --out report.xml --format documentation
@@ -126,7 +113,6 @@ blocks:
       - "🧹 RuboCop"
       - "🛡️ Brakeman"
       - "🛡️ Bundler Audit"
-      - "🖼️ Webpacker Build"
 
 # ---------------------------------------------------------------------
 # PIPELINE SUMMARY
