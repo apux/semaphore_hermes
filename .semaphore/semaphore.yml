@@ -27,7 +27,6 @@ global_job_config:
       - sem-service start postgres 17   # Start Postgres 17
       - sem-service start redis 7       # Start Redis 7
       - sem-version ruby 3.2.2          # Select Ruby 3.2.2
-      - sem-version node 20.11.0        # Select Node 20.11
       # Bundler 4 removed `bundle install --deployment`. This setting installs
       # gems into vendor/bundle and keeps Gemfile.lock frozen for every job.
       - bundle config set --local deployment true
@@ -41,25 +40,14 @@ blocks:
   - name: "🛠 Setup & Cache"
     task:
       jobs:
-        - name: Install Gems & JS deps
+        - name: Install Gems
           commands:
-            - yarn install --frozen-lockfile                   # Install JS deps
             - bundle install                                    # Install Ruby gems
             - gem install --no-document semaphore_test_boosters  # Install Boosters gem
-            - cache store                                      # Save vendor/bundle & node_modules
+            - cache store                                      # Save vendor/bundle
     dependencies: []
 
   # ------------- CODE QUALITY -------------
-  - name: "🔍 ESLint & Stylelint"
-    task:
-      jobs:
-        - name: JS / CSS Lint
-          commands:
-            - yarn run eslint .                # Lint JavaScript
-            - yarn run stylelint '**/*.scss'   # Lint SCSS
-    dependencies:
-      - "🛠 Setup & Cache"
-
   - name: "🧹 RuboCop"
     task:
       jobs:
