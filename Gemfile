@@ -52,6 +52,9 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # RSpec for Rails [https://rspec.info/]
+  gem "rspec-rails"
 end
 
 group :development do
@@ -63,4 +66,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # JUnit XML so Semaphore can publish RSpec results
+  gem "rspec_junit_formatter"
 end
