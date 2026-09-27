@@ -1,0 +1,13 @@
+<% content_for :title, "Semaphore Hermes" %>
+
+<section class="hero">
+  <p class="eyebrow">Semaphore Hermes</p>
+  <h1>Sign in, then pick up where you left off.</h1>
+  <p class="lede">This is the front door. Log in with your email and password, and we’ll open your welcome page.</p>
+
+  <% if authenticated? %>
+    <%= link_to "Go to your welcome page", welcome_path, class: "button button-primary" %>
+  <% else %>
+    <%= link_to "Log in", new_session_path, class: "button button-primary" %>
+  <% end %>
+</section>

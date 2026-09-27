@@ -1,0 +1,8 @@
+<% content_for :title, "Welcome" %>
+
+<section class="panel">
+  <p class="eyebrow">Signed in</p>
+  <h1>Welcome</h1>
+  <p class="lede">You are logged in as <strong><%= Current.user.email_address %></strong>.</p>
+  <%= button_to "Log out", session_path, method: :delete, class: "button button-primary" %>
+</section>

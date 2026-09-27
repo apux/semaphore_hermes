@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Semaphore Hermes" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Semaphore Hermes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <%= link_to "Semaphore Hermes", root_path, class: "wordmark" %>
+      <nav class="site-nav">
+        <% if authenticated? %>
+          <%= link_to "Welcome", welcome_path %>
+          <%= button_to "Log out", session_path, method: :delete, class: "button button-quiet" %>
+        <% else %>
+          <%= link_to "Log in", new_session_path, class: "button" %>
+        <% end %>
+      </nav>
+    </header>
+
+    <% if flash[:alert].present? %>
+      <div class="flash flash-alert" role="alert"><%= flash[:alert] %></div>
+    <% end %>
+    <% if flash[:notice].present? %>
+      <div class="flash flash-notice" role="status"><%= flash[:notice] %></div>
+    <% end %>
+
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>

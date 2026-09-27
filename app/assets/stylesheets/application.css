@@ -1,0 +1,201 @@
+:root {
+  --paper: #f3efe6;
+  --ink: #1c1916;
+  --muted: #5e574d;
+  --line: #ddd4c4;
+  --card: #fffdf8;
+  --accent: #b8431f;
+  --accent-ink: #fff8f4;
+  --alert-bg: #f8e4df;
+  --alert: #8b2618;
+  --notice-bg: #e3f0e6;
+  --notice: #1d5c38;
+  --shadow: 0 18px 40px rgba(48, 32, 16, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 0% -10%, #efe2cc 0%, transparent 60%),
+    var(--paper);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+h1,
+.wordmark {
+  font-family: "Iowan Old Style", Palatino, Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+a {
+  color: var(--accent);
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+}
+
+.wordmark {
+  color: inherit;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.site-nav form {
+  margin: 0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+}
+
+.hero h1 {
+  max-width: 12ch;
+  margin: 0.35rem 0 1rem;
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  line-height: 0.98;
+}
+
+.panel {
+  max-width: 28rem;
+  padding: 2rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.panel h1 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 2.4rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.lede {
+  max-width: 36rem;
+  margin-top: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field label {
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  color: var(--ink);
+  font: inherit;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: 2px solid #e7b5a4;
+  border-color: var(--accent);
+}
+
+.button,
+button {
+  display: inline-block;
+  padding: 0.65rem 1rem;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.button-primary {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.button-quiet {
+  padding-inline: 0.2rem;
+  background: transparent;
+  border-color: transparent;
+}
+
+.fine-print {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.flash {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+}
+
+.flash-alert {
+  color: var(--alert);
+  background: var(--alert-bg);
+}
+
+.flash-notice {
+  color: var(--notice);
+  background: var(--notice-bg);
+}
+
+@media (max-width: 640px) {
+  .site-header,
+  main {
+    padding-inline: 1rem;
+  }
+
+  .hero h1 {
+    max-width: none;
+  }
+}

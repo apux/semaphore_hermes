@@ -1,0 +1,18 @@
+<% content_for :title, "Forgot password" %>
+
+<section class="panel">
+  <p class="eyebrow">Account</p>
+  <h1>Forgot your password?</h1>
+  <p class="lede">Enter your email and we’ll send reset instructions if an account exists.</p>
+
+  <%= form_with url: passwords_path, class: "stack" do |form| %>
+    <div class="field">
+      <%= form.label :email_address, "Email" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "you@example.com", value: params[:email_address] %>
+    </div>
+
+    <%= form.button "Email reset instructions", class: "button button-primary", name: nil %>
+  <% end %>
+
+  <p class="fine-print"><%= link_to "Back to log in", new_session_path %></p>
+</section>
