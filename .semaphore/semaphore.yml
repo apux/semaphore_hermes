@@ -111,7 +111,17 @@ blocks:
 # ---------------------------------------------------------------------
 after_pipeline:
   task:
+    # Project secret with HERMES_WEBHOOK_URL and HERMES_WEBHOOK_SECRET.
+    # Global job config is not applied here, so this secret must be listed on the task.
+    secrets:
+      - name: hermes-webhook
     jobs:
       - name: "📊 Merge Results"
         commands:
           - test-results gen-pipeline-report  # Collate JUnit reports
+      - name: "Notify Hermes"
+        execution_time_limit:
+          minutes: 10
+        commands:
+          - checkout
+          - python3 .semaphore/notify_hermes.py
