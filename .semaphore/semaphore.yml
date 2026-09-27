@@ -98,13 +98,17 @@ blocks:
           value: 127.0.0.1         # PostgreSQL host
         - name: PGUSER
           value: postgres          # PostgreSQL user
+        # rspec_booster only accepts --job/--dry-run. Extra RSpec flags go here.
+        # The booster already adds --format documentation for the job log.
+        - name: TB_RSPEC_OPTIONS
+          value: "--format RspecJunitFormatter --out report.xml"
       jobs:
         - name: "🟢 RSpec Tests"
           parallelism: 5                       # Split across 5 nodes
           commands:
             - bundle exec rake db:setup        # Build fresh test DB
             # Automatic test splitting via Semaphore Boosters
-            - rspec_booster --job "$SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT" --format RspecJunitFormatter --out report.xml --format documentation
+            - rspec_booster --job "$SEMAPHORE_JOB_INDEX/$SEMAPHORE_JOB_COUNT"
       epilogue:
         always:
           commands:
